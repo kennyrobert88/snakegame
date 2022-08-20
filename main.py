@@ -16,7 +16,7 @@ fontStyle = pygame.font.SysFont(None, 50)
 
 def ourSnake(snakeBlock, snakeList):
     for s in snakeList:
-        pygame.draw.rect(display, black, [s[0], s[1], snakeBlock, snakeBlock])
+        pygame.draw.rect(display, white, [s[0], s[1], snakeBlock, snakeBlock])
 
 def yourScore(score):
     value = scoreFont.render("Your Score: " + str(score), True, yellow)
@@ -55,27 +55,32 @@ def gameLoop():
                 gameOver = True
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    xPositionChange, yPositionChange = -snakeBlock, 0
+                    if xPositionChange == 0:
+                        xPositionChange, yPositionChange = -snakeBlock, 0
                 elif event.key == pygame.K_RIGHT:
-                    xPositionChange, yPositionChange = snakeBlock, 0
+                    if xPositionChange == 0:
+                        xPositionChange, yPositionChange = snakeBlock, 0
                 elif event.key == pygame.K_UP:
-                    xPositionChange, yPositionChange = 0, -snakeBlock
+                    if yPositionChange == 0:
+                        xPositionChange, yPositionChange = 0, -snakeBlock
                 elif event.key == pygame.K_DOWN:
-                    xPositionChange, yPositionChange = 0, snakeBlock       
+                    if yPositionChange == 0:
+                        xPositionChange, yPositionChange = 0, snakeBlock       
         # Using logic for the game
         if xPosition < 0 or yPosition < 0 or xPosition >= displayWidth or yPosition >= displayHeight:
             gameClose = True
         xPosition += xPositionChange
         yPosition += yPositionChange
-        display.fill(white)
+        display.fill(blue)
         pygame.draw.rect(display, green, [xFood, yFood, snakeBlock, snakeBlock])
-        snakeList.append([xPosition, yPosition])
+        snakeHead = [xPosition, yPosition]
+        snakeList.append(snakeHead)
 
         if len(snakeList) > lengthOfSnake:
             del snakeList[0]
         
         for s in snakeList[:-1]:
-            if s == [xPosition, yPosition]:
+            if s == snakeHead:
                 gameClose = True
         ourSnake(snakeBlock, snakeList)
         yourScore(lengthOfSnake - 1)
