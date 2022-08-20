@@ -68,7 +68,15 @@ def gameLoop():
                         xPositionChange, yPositionChange = 0, snakeBlock       
         # Using logic for the game
         if xPosition < 0 or yPosition < 0 or xPosition >= displayWidth or yPosition >= displayHeight:
-            gameClose = True
+            # gameClose = True
+            if xPosition < 0:
+                xPosition = displayWidth
+            elif xPosition >= displayWidth:
+                xPosition = 0
+            elif yPosition < 0:
+                yPosition = displayHeight
+            elif yPosition >= displayHeight:
+                yPosition = 0
         xPosition += xPositionChange
         yPosition += yPositionChange
         display.fill(blue)
