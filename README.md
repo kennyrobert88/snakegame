@@ -1,4 +1,6 @@
 # Python Snake Game
+## Background
+### Creating a replica of Snake Games in mobile using python and pygame GUI
 ## installation
 ### 1. Make sure you have a python interpreter ready
 ```js
